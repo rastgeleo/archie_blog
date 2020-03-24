@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+
+{% block contents %}
+<form action="{% url 'blog:new_post' %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Save">
+</form>
+<p><a href="{% url 'blog:new_category' %}">+Add a new category</a></p>
+{% endblock contents %}
