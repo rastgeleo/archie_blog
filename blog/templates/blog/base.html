@@ -5,6 +5,13 @@
   <title>Archie's Blog</title>
 </head>
 <body>
+
+  {% if user.is_authenticated %}
+    <p>Hello, {{ user.username }}!<p>
+    <p><a href="{% url 'users:logout' %}">logout</a><p>
+  {% else %}
+    <p><a href="{% url 'users:login' %}">login</a><p>
+  {% endif %}
   {% block contents %}
   {% endblock contents %}
 </body>

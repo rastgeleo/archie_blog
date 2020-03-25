@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Post, Category
 from .forms import PostForm, CategoryForm
@@ -11,7 +12,7 @@ def index(request):
 
 
 def detail(request, post_id):
-    post = Post.objects.get(pk=post_id)
+    post = get_object_or_404(Post, pk=post_id)
     context = {'post': post}
     return render(request, 'blog/detail.html', context)
 
@@ -23,6 +24,7 @@ def categories(request):
     return render(request, 'blog/categories.html', context)
 
 
+@login_required
 def new_category(request):
     """Add a new category"""
     if request.method != 'POST':
@@ -37,6 +39,22 @@ def new_category(request):
     return render(request, 'blog/new_category.html', context)
 
 
+@login_required
+def edit_category(request, category_id):
+    """Edit an existing category"""
+    category = get_object_or_404(Category, pk=category_id)
+    if request.method != 'POST':
+        form = CategoryForm(instance=category)
+    else:
+        form = CategoryForm(instance=category, data=request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect('blog:categories')
+    context = {'form': form, 'category': category}
+    return render(request, 'blog/edit_category.html', context)
+
+
+@login_required
 def new_post(request):
     """Add a new post"""
     if request.method != 'POST':
@@ -52,6 +70,7 @@ def new_post(request):
     return render(request, 'blog/new_post.html', context)
 
 
+@login_required
 def edit_post(request, post_id):
     """Edit the existing post"""
     post = get_object_or_404(Post, pk=post_id)

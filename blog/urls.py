@@ -15,4 +15,10 @@ urlpatterns = [
     path('<int:post_id>/edit_post/', views.edit_post, name='edit_post'),
     # Page for adding a new category
     path('new_category/', views.new_category, name='new_category'),
+    # Page for editing an existing category
+    path(
+        'edit_category/<int:category_id>/',
+        views.edit_category,
+        name='edit_category'
+    )
 ]

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # My Apps
     'blog',
+    'users',
     # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -121,3 +122,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Custom settings
+LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/users/profile/'
+LOGOUT_REDIRECT_URL = '/blog/'
