@@ -6,7 +6,7 @@ from .forms import PostForm, CategoryForm
 
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all()[:5]
     context = {'posts': posts}
     return render(request, 'blog/index.html', context)
 
@@ -17,10 +17,18 @@ def detail(request, post_id):
     return render(request, 'blog/detail.html', context)
 
 
-def categories(request):
-    """list for categories"""
+def categories(request, category_id=None):
+    """list view by categories"""
     categories = Category.objects.all()
-    context = {'categories': categories}
+    if category_id:
+        posts = Post.objects.filter(category__id=category_id)
+    else:
+        posts = Post.objects.all()
+    context = {
+        'categories': categories,
+        'posts': posts,
+        'category_id': category_id
+    }
     return render(request, 'blog/categories.html', context)
 
 
@@ -34,7 +42,7 @@ def new_category(request):
         if form.is_valid():
             text = form.cleaned_data['text']
             Category.objects.create(text=text)
-            return redirect('blog:new_post')
+            return redirect('blog:categories')
     context = {'form': form}
     return render(request, 'blog/new_category.html', context)
 

@@ -1,11 +1,23 @@
 {% extends 'blog/base.html' %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+<h2>Log In</<h2>
+{% endblock page_header %}
 
 {% block contents %}
-<form method="post" action="{% url 'users:login' %}">
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<form method="post" action="{% url 'users:login' %}" class="form">
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="login">
+  {% bootstrap_form form %}
+  {% buttons %}
+  <input type="submit" class="btn btn-secondary" value="login">
   <input type="hidden" name="next" value="{{ next }}">
+  {% endbuttons %}
 </form>
-<p><a href="{% url 'users:register' %}">register</a></p>
+<div class="ml-auto">
+  <a href="{% url 'users:register' %}">register</a>
+</div>
 {% endblock contents %}

@@ -1,7 +1,30 @@
 {% extends 'blog/base.html' %}
 
+{% block page_header %}
+<h2>Profile</h2>
+{% endblock page_header %}
+
 {% block contents %}
-<p>welcome to profile page.</p>
-<p>{{ user.username }}</p>
-<p>{{ user.first_name }}</p>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="list-group">
+      <a href="{% url 'users:profile' %}"
+        class="list-group-item list-group-item-action">
+        Profile
+      </a>
+      <a href="{% url 'blog:new_post' %}"
+        class="list-group-item list-group-item-action">
+        New post
+      </a>
+      <a href="#"
+        class="list-group-item list-group-item-action">
+        Manage categories
+      </a>
+    </div>
+  </div>
+  <div class="col-sm-8">
+    {% block sub_contents %}
+    {% endblock sub_contents %}
+  </div>
+</div>
 {% endblock contents %}

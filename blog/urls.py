@@ -7,8 +7,10 @@ urlpatterns = [
     path('', views.index, name='index'),
     # Page for post details
     path('<int:post_id>/', views.detail, name='detail'),
-    # Page listing categories
+    # Page for listing by categories
     path('categories/', views.categories, name='categories'),
+    # Page for listng by specific categories
+    path('categories/<int:category_id>/', views.categories, name='categories'),
     # Page for adding a new post
     path('new_post/', views.new_post, name='new_post'),
     # Page for editing an existing post

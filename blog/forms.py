@@ -8,6 +8,7 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['text']
         labels = {'text': ''}
+        help_texts = {'text': 'Insert the name for a new category'}
 
 
 class PostForm(forms.ModelForm):
@@ -19,5 +20,5 @@ class PostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={
                     'size': 80, 'placeholder': 'Title'
                     }),
-            'text': forms.Textarea(attrs={'cols': 80}),
+            'text': forms.Textarea(attrs={'cols': 80})
         }

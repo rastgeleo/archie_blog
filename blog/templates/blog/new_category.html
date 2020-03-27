@@ -1,9 +1,14 @@
 {% extends 'blog/base.html' %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+<h2>New Category</h2>
+{% endblock page_header %}
 
 {% block contents %}
-<form action="{% url 'blog:new_category' %}" method="post">
+<form method="post" class="form" action="{% url 'blog:new_category' %}">
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit">
+  {% bootstrap_form form %}
+  <input class="btn btn-secondary" type="submit" value="Save">
 </form>
 {% endblock contents %}
