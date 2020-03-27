@@ -17,10 +17,16 @@ urlpatterns = [
     path('<int:post_id>/edit_post/', views.edit_post, name='edit_post'),
     # Page for adding a new category
     path('new_category/', views.new_category, name='new_category'),
-    # Page for editing an existing category
+    # Page for managing categories
     path(
-        'edit_category/<int:category_id>/',
-        views.edit_category,
-        name='edit_category'
-    )
+        'manage_categories/',
+        views.manage_categories,
+        name='manage_categories'
+    ),
+    # Page for editing a category item
+    path(
+        'manage_categories/<int:category_id>/',
+        views.manage_categories,
+        name='manage_categories'
+    ),
 ]

@@ -6,7 +6,7 @@
 {% endblock page_header %}
 
 {% block contents %}
-<form method="post" class="form" action="{% url 'blog:new_category' %}">
+<form method="post" action="{% url 'blog:new_category' %}">
   {% csrf_token %}
   {% bootstrap_form form %}
   <input class="btn btn-secondary" type="submit" value="Save">

@@ -48,18 +48,34 @@ def new_category(request):
 
 
 @login_required
-def edit_category(request, category_id):
-    """Edit an existing category"""
-    category = get_object_or_404(Category, pk=category_id)
-    if request.method != 'POST':
-        form = CategoryForm(instance=category)
+def manage_categories(request, category_id=None):
+    """manage existing categories"""
+    categories = Category.objects.all()
+
+    # Edit category title
+    if category_id:
+        category = get_object_or_404(Category, pk=category_id)
+        if request.method != 'POST':
+            form = CategoryForm(instance=category)
+        else:
+            form = CategoryForm(instance=category, data=request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('blog:manage_categories')
+        context = {'categories': categories, 'form': form}
+
+    # Add a new category
     else:
-        form = CategoryForm(instance=category, data=request.POST)
-        if form.is_valid:
-            form.save()
-            return redirect('blog:categories')
-    context = {'form': form, 'category': category}
-    return render(request, 'blog/edit_category.html', context)
+        if request.method != 'POST':
+            form = CategoryForm()
+        else:
+            form = CategoryForm(data=request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('blog:manage_categories')
+
+        context = {'categories': categories, 'form': form}
+    return render(request, 'blog/manage_categories.html', context)
 
 
 @login_required

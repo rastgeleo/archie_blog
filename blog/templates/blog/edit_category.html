@@ -1,9 +1,17 @@
-{% extends 'blog/base.html' %}
+{% extends 'registration/account.html' %}
 
 {% block contents %}
+<ul>
+  {% for category in categoies %}
+  <li>{{ category.text }}</li>
+  {% endfor %}
+</ul>
+
+<!--
 <form action="{% url 'blog:edit_category' category.id %}" method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <input type="submit" value="Save">
 </form>
+-->
 {% endblock contents %}

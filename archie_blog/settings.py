@@ -126,5 +126,5 @@ STATIC_URL = '/static/'
 
 # Custom settings
 LOGIN_URL = '/users/login/'
-LOGIN_REDIRECT_URL = '/users/profile/'
+LOGIN_REDIRECT_URL = '/users/account/'
 LOGOUT_REDIRECT_URL = '/blog/'

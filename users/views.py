@@ -21,7 +21,7 @@ def register(request):
 
 
 @login_required
-def profile(request):
+def account(request):
     """view for profile page"""
     context = {'user': request.user}
-    return render(request, 'registration/profile.html', context)
+    return render(request, 'registration/account.html', context)

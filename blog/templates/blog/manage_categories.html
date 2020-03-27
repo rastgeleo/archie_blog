@@ -1,0 +1,76 @@
+{% extends 'registration/account.html' %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+<h2>Manage Categories</h2>
+{% endblock %}
+
+{% block sub_contents %}
+
+<ul>
+  {% for category in categories %}
+  <li>{{ category.text }} <a data-toggle="modal" data-target="#editModal" data-categoryid="{{ category.id }}">edit</a></li>
+  {% endfor %}
+</ul>
+<p><a data-toggle="modal" data-target="#addModal">Add a new category</a></p>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit category title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-group">
+      <form method="post" action="{% url 'blog:manage_categories' %}">
+        <div class="modal-body">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="Save changes">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add a new category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="{% url 'blog:manage_categories' %}">
+        <div class="modal-body">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="Save changes">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+$('#editModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var category_id = button.data('categoryid') // Extract info from data-* attributes
+  var modal = $(this)
+  modal.find('.modal-content form').attr('action', '{% url 'blog:manage_categories' %}' + category_id + '/')
+  // Change action attribute to url with categoty_id
+})
+</script>
+
+{% endblock sub_contents %}
